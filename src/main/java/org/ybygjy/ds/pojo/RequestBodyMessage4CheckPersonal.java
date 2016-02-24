@@ -1,5 +1,7 @@
 package org.ybygjy.ds.pojo;
 
+import com.google.gson.GsonBuilder;
+
 /**
  * 报文体
  * @author WangYanCheng
@@ -44,12 +46,10 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 	}
 	@Override
 	public String toHmacData() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.toJson();
 	}
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GsonBuilder().create().toJson(this);
 	}
 }

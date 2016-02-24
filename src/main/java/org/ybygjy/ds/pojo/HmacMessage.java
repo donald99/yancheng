@@ -1,5 +1,10 @@
 package org.ybygjy.ds.pojo;
 
+import org.ybygjy.ds.constant.Constants;
+import org.ybygjy.ds.utils.AESUtils;
+import org.ybygjy.ds.utils.Base64Utils;
+import org.ybygjy.ds.utils.Sha256Util;
+
 /**
  * 报文签名
  * @author WangYanCheng
@@ -24,9 +29,13 @@ public class HmacMessage implements Message {
 	 * @return rtnHmac
 	 */
 	public String getHmac() {
-		String headerStr = this.headerMessage.toHmacData();
-		String bodyStr = this.bodyMessage.toHmacData();
-		return "";
+		String bodyHmac = bodyMessage.toHmacData();
+		byte[] bytes = AESUtils.doEncrypt(bodyHmac, Constants.SERV_KEY, Constants.SERV_IV);
+		String base64Str = Base64Utils.encode(bytes);
+		String headerHmac = headerMessage.toHmacData();
+		String hmacSrcData = headerHmac + ",\"body\":\"" + base64Str + "\""; 
+		String rtnHmac = Sha256Util.encrypt(hmacSrcData);
+		return rtnHmac;
 	}
 
 	/**
@@ -34,5 +43,9 @@ public class HmacMessage implements Message {
 	 */
 	public String toJson() {
 		return "{\"hashValue\":\"" + this.getHmac() + "\"}";
+	}
+
+	public String toHmacData() {
+		return null;
 	}
 }

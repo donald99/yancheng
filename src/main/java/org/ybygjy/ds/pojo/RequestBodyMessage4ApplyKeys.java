@@ -2,6 +2,8 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
+import com.google.gson.GsonBuilder;
+
 /**
  * 报文体
  * @author WangYanCheng
@@ -72,21 +74,21 @@ public class RequestBodyMessage4ApplyKeys extends RequestBodyMessage {
 
 	@Override
 	public String toHmacData() {
-		return "";
+		return this.toJson();
 	}
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		String rtnJson = new GsonBuilder().create().toJson(this);
+		return rtnJson;
 	}
 	/**
 	 * 数据转换
 	 * @param requestData
 	 */
 	public void parseMap(Map<String, String> requestData) {
-		this.setKeyType(requestData.get("key_type"));
-		this.setLastKey(requestData.get("last_key"));
-		this.setLastKeyGenTime(requestData.get("last_keygen_time"));
-		this.setValidationTime(((String)requestData.get("validation_time")).toCharArray()[0]);
+		this.setKeyType(requestData.get("rbm_keytype"));
+		this.setLastKey(requestData.get("rbm_lastkey"));
+		this.setLastKeyGenTime(requestData.get("rbm_lastkeygentime"));
+		this.setValidationTime(((String)requestData.get("rbm_validationtime")).charAt(0));
 	}
 }

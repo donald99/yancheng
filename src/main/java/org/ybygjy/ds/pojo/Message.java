@@ -11,4 +11,9 @@ public interface Message {
 	 * @return rtnJson
 	 */
 	public String toJson();
+	/**
+	 * 参与签名的内容
+	 * @return rtnPartStr
+	 */
+	public String toHmacData();
 }

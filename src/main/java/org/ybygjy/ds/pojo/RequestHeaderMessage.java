@@ -1,11 +1,15 @@
 package org.ybygjy.ds.pojo;
 
+import java.util.Map;
+
+import com.google.gson.GsonBuilder;
+
 /**
  * 报文头
  * @author WangYanCheng
  * @version 2016年2月24日
  */
-public class RequestHeaderMessage {
+public class RequestHeaderMessage implements HeaderMessage {
 	/** 交易流水号 */
 	private String transactionID;
 	/** 产品编码*/
@@ -53,5 +57,20 @@ public class RequestHeaderMessage {
 	}
 	public void setAuthorizationID(String authorizationID) {
 		this.authorizationID = authorizationID;
+	}
+	public void parseMap(Map<String, String> requestData) {
+		this.setAction(((String)requestData.get("rhm_action")).charAt(0));
+		this.setAuthorizationID(requestData.get("rhm_authid"));
+		this.setChannel(((String)requestData.get("rhm_channel")).charAt(0));
+		this.setTransactionCode(requestData.get("rhm_transcode"));
+		this.setTransactionID(requestData.get("rhm_transid"));
+		this.setUserAccountID(requestData.get("rhm_useraccid"));
+	}
+	public String toJson() {
+		String rtnJson = new GsonBuilder().create().toJson(this);
+		return rtnJson;
+	}
+	public String toHmacData() {
+		return "\"head\":" + this.toJson();
 	}
 }
