@@ -1,5 +1,7 @@
 package org.ybygjy.ds.pojo;
 
+import java.util.Map;
+
 import org.ybygjy.ds.constant.Constants;
 import org.ybygjy.ds.utils.AESUtils;
 import org.ybygjy.ds.utils.Base64Utils;
@@ -47,5 +49,7 @@ public class HmacMessage implements Message {
 
 	public String toHmacData() {
 		return null;
+	}
+	public void parseMap(Map<String, String> requestData) {
 	}
 }

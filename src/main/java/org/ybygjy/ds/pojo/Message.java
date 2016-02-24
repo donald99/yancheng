@@ -1,5 +1,7 @@
 package org.ybygjy.ds.pojo;
 
+import java.util.Map;
+
 /**
  * 定义基础报文服务
  * @author WangYanCheng
@@ -16,4 +18,9 @@ public interface Message {
 	 * @return rtnPartStr
 	 */
 	public String toHmacData();
+	/**
+	 * 解析数据
+	 * @param requestData
+	 */
+	public void parseMap(Map<String, String> requestData);
 }

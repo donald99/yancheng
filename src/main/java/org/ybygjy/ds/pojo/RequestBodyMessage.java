@@ -1,5 +1,7 @@
 package org.ybygjy.ds.pojo;
 
+import java.util.Map;
+
 /**
  * 报文体
  * @author WangYanCheng

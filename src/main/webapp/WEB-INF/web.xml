@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+  <display-name>dataservice</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>ApplyKeysServlet</servlet-name>
+		<servlet-class>org.ybygjy.ds.controller.ApplyKeysServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>RealNameAuthServlet</servlet-name>
+		<servlet-class>org.ybygjy.ds.controller.RealNameAuthServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RealNameAuthServlet</servlet-name>
+		<url-pattern>/realNameAuth</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ApplyKeysServlet</servlet-name>
+		<url-pattern>/applyKeys</url-pattern>
+	</servlet-mapping>
+
+	<!-- Character Encoding filter -->
+	<filter>
+		<filter-name>setCharacterEncoding</filter-name>
+		<filter-class>org.ybygjy.ds.controller.CharacterEncodingFilter</filter-class>
+	</filter>
+    <filter-mapping>
+        <filter-name>setCharacterEncoding</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+	<welcome-file-list>
+	  	<welcome-file>index.html</welcome-file>
+	  	<welcome-file>index.jsp</welcome-file>
+	 </welcome-file-list>
+</web-app>
