@@ -28,13 +28,14 @@ public class HmacMessage implements Message {
 	 * @return rtnHmac
 	 */
 	public String getHmac() {
-System.out.println("body签名原始数据：" + bodyMessage.toJson());
+System.out.println("body加密输入数据：" + bodyMessage.toJson());
 		String bodyHmac = bodyMessage.toHmacData();
+System.out.println("body加密输出数据：" + bodyHmac);
 		String headerHmac = headerMessage.toHmacData();
 		String hmacSrcData = headerHmac + ",\"body\":\"" + bodyHmac + "\""; 
-System.out.println("计算签名数据：" + hmacSrcData);
+System.out.println("签名输入数据：" + hmacSrcData);
 		String rtnHmac = Sha256Util.encrypt(hmacSrcData);
-System.out.println("计算签名数据=>SHA256：" + rtnHmac);
+System.out.println("签名输出数据：" + rtnHmac);
 		return rtnHmac;
 	}
 

@@ -44,16 +44,18 @@ public class RealNameAuthServlet extends HttpServlet {
 		requestData.put("rhm_action", "0");
 		requestData.put("rhm_channel", "0");
 		requestData.put("rhm_transcode", "CF209b0010");
-		requestData.put("rhm_transid", "2J5uvSN0v5A0mPAPcB5");
-		requestData.put("rhm_useraccid", "CF00000001");
-		requestData.put("rhm_authid", "11111111");
-		requestData.put("rbm_identitynumber", "348888666688886666");
-		requestData.put("rbm_identitytype", "1");
-		requestData.put("rbm_personname", "CFCA");
-		requestData.put("rbm_address", "上海市东方路");
-		requestData.put("rbm_email", "abc@163.com");
-		requestData.put("rbm_cardnumber", "629999753596976789");
-		requestData.put("rbm_cellphonenumber", "13888886666");
+		requestData.put("rhm_transid", "2J5uvSN0v5A0mP" + ((int)(Math.random() * 100000)));
+		requestData.put("rhm_useraccid", req.getParameter("rhm_useraccid"));
+		requestData.put("rhm_authid", req.getParameter("rhm_authid"));
+		requestData.put("rbm_identitynumber", req.getParameter("rbm_identitynumber"));
+		requestData.put("rbm_identitytype", req.getParameter("rbm_identitytype"));
+		requestData.put("rbm_personname", req.getParameter("rbm_personname"));
+		requestData.put("rbm_address", req.getParameter("rbm_address"));
+		requestData.put("rbm_email", req.getParameter("rbm_email"));
+		requestData.put("rbm_cardnumber", req.getParameter("rbm_cardnumber"));
+		requestData.put("rbm_cellphonenumber", req.getParameter("rbm_cellphonenumber"));
+		requestData.put("sys_ctx_key", req.getParameter("sys_ctx_key"));
+		
 		DataService dataService = new DataServiceImpl();
 		Map<String, String> responseData = dataService.checkPersonId(requestData);
 		resp.setContentType("text/json; charset=UTF-8");

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.ybygjy.ds.service.DataService;
 import org.ybygjy.ds.service.impl.DataServiceImpl;
 
@@ -25,7 +27,7 @@ public class ApplyKeysServlet extends HttpServlet {
 	 * serialNumber
 	 */
 	private static final long serialVersionUID = 6765742536274831233L;
-
+	private static Logger logger = LoggerFactory.getLogger(ApplyKeysServlet.class);
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -40,8 +42,8 @@ public class ApplyKeysServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		super.service(req, resp);
+		logger.debug("接收请求{}#{}", req.getPathInfo(), req.getParameterMap());
 		Map<String, String> requestData = new HashMap<String, String>();
-		
 		requestData.put("rhm_transid", "BT7D6drYfN0hq" + ((int)(Math.random() * 1000000)));
 		requestData.put("rhm_transcode", "CF00000001");
 		requestData.put("rhm_action", "0");
@@ -52,10 +54,12 @@ public class ApplyKeysServlet extends HttpServlet {
 		requestData.put("rbm_lastkey", req.getParameter("rbm_lastkey"));
 		requestData.put("rbm_lastkeygentime", req.getParameter("rbm_lastkeygentime"));
 		requestData.put("rbm_validationtime", "0");
+		logger.debug("解析传递参数{}#{}", req.getPathInfo(), requestData);
 		DataService dataService = new DataServiceImpl();
 		Map<String, String> responseData = dataService.applyKeys(requestData);
 		System.out.println(responseData);
 		resp.setContentType("text/json; charset=UTF-8");
+		logger.debug("响应请求{}#{}", req.getPathInfo(), responseData);
 		Gson gson = new Gson();
 		resp.getOutputStream().write(gson.toJson(responseData).getBytes(Charset.forName("UTF-8")));
 	}

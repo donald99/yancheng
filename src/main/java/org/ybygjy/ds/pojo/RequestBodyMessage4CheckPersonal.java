@@ -2,6 +2,8 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.ybygjy.ds.constant.Constants;
 import org.ybygjy.ds.utils.AESUtils;
 import org.ybygjy.ds.utils.Base64Utils;
@@ -27,7 +29,10 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 	/**cardNumber*/
 	private String cardNumber;
 	/**phoneNumber*/
-	private String cellPhoneNumb;
+	private String cellPhoneNumber;
+	private transient String keys;
+	/** Logger*/
+	private static Logger logger = LoggerFactory.getLogger(RequestBodyMessage.class);
 	/**
 	 * Constructor
 	 */
@@ -69,16 +74,24 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	public String getCellPhoneNumb() {
-		return cellPhoneNumb;
+	public String getCellPhoneNumber() {
+		return cellPhoneNumber;
 	}
-	public void setCellPhoneNumb(String cellPhoneNumb) {
-		this.cellPhoneNumb = cellPhoneNumb;
+	public void setCellPhoneNumber(String cellPhoneNumb) {
+		this.cellPhoneNumber = cellPhoneNumb;
+	}
+	
+	public String getKeys() {
+		return keys == null ? Constants.SERV_KEY_NEW : keys;
+	}
+	public void setKeys(String keys) {
+		this.keys = keys;
 	}
 	@Override
 	public String toHmacData() {
-		byte[] bytes = AESUtils.doEncrypt(this.toJson(), Constants.SERV_KEY, Constants.SERV_IV);
-		return Base64Utils.encode(bytes);
+		logger.debug("加密用到的Key:{},{},{}", this.toJson(), this.getKeys(), Constants.SERV_IV);
+		byte[] bytes = AESUtils.doEncrypt(this.toJson(), this.getKeys(), Constants.SERV_IV);
+		return null == bytes ? null : Base64Utils.encode(bytes);
 	}
 	@Override
 	public String toJson() {
@@ -90,7 +103,7 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 		this.setPersonName(requestData.get("rbm_personname"));
 		this.setAddress(requestData.get("rbm_address"));
 		this.setCardNumber(requestData.get("rbm_cardnumber"));
-		this.setCellPhoneNumb(requestData.get("rbm_cellphonenumber"));
+		this.setCellPhoneNumber(requestData.get("rbm_cellphonenumber"));
 		this.setEmail(requestData.get("rbm_email"));
 	}
 }

@@ -1,19 +1,15 @@
 package org.ybygjy.ds.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -24,141 +20,6 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AESUtils {
 	private static String ALG_DEF = "AES";
-	public static byte[] encrypt(String content, String password) {
-		try {
-			KeyGenerator keyGenerator = KeyGenerator.getInstance(AESUtils.ALG_DEF);
-			keyGenerator.init(128, new SecureRandom(password.getBytes()));
-			SecretKey secretKey = keyGenerator.generateKey();
-			byte[] encodeFmt = secretKey.getEncoded();
-			SecretKeySpec secretKeySpec = new SecretKeySpec(encodeFmt, AESUtils.ALG_DEF);
-			Cipher cipher = Cipher.getInstance(AESUtils.ALG_DEF);
-			byte[] encryptContent = content.getBytes(Charset.forName("UTF-8"));
-			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-			byte[] result = cipher.doFinal(encryptContent);
-			return result;
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static byte[] decrypt(byte[] content, String password) {
-		try {
-			KeyGenerator keyGenerator = KeyGenerator.getInstance(AESUtils.ALG_DEF);
-			keyGenerator.init(128, new SecureRandom(password.getBytes()));
-			SecretKey secretKey = keyGenerator.generateKey();
-			byte[] encodeFmt = secretKey.getEncoded();
-			SecretKeySpec sksInst = new SecretKeySpec(encodeFmt, AESUtils.ALG_DEF);
-			Cipher cipher = Cipher.getInstance(AESUtils.ALG_DEF);
-			cipher.init(Cipher.DECRYPT_MODE, sksInst);
-			byte[] result = cipher.doFinal(content);
-			return result;
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String parseByte2HexStr(byte[] buff) {
-		StringBuffer sbuf = new StringBuffer();
-		for(int i = 0; i < buff.length; i++) {
-			String hexStr = Integer.toHexString(buff[i] & 0xFF);
-			if (hexStr.length() == 1) {
-				hexStr = '0' + hexStr;
-			}
-			sbuf.append(hexStr.toUpperCase());
-		}
-		return sbuf.toString();
-	}
-	public static byte[] parseHexStr2Bytes(String hexStr) {
-		if (hexStr.length() < 1) {
-			return null;
-		}
-		byte[] result = new byte[hexStr.length()/2];
-		for(int i = 0; i < hexStr.length()/2; i++) {
-			int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
-			int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2), 16);
-			result[i] = (byte)(high * 16 + low);
-		}
-		return result;
-	}
-	public static byte[] anotherEncrypt(String content, String password) {
-		SecretKeySpec sksInst = new SecretKeySpec(password.getBytes(), AESUtils.ALG_DEF);
-		try {
-			Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
-			byte[] byteContent = content.getBytes("utf-8");
-			cipher.init(Cipher.ENCRYPT_MODE, sksInst);
-			byte[] result = cipher.doFinal(byteContent);
-			return result;
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static byte[] anotherDecrypt(byte[] bytes, String password) {
-		SecretKeySpec sksInst = new SecretKeySpec(password.getBytes(), AESUtils.ALG_DEF);
-		try {
-			Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
-			cipher.init(Cipher.DECRYPT_MODE, sksInst);
-			byte[] result = cipher.doFinal(bytes);
-			return result;
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 	/**
 	 * AES加密
 	 * @param text 明文
@@ -182,41 +43,49 @@ public class AESUtils {
 			byte[] bytes = chipher.doFinal(text.getBytes());
 			return bytes;
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 	/**
-	 * 测试入口
-	 * @param args 参数列表
+	 * 解密
+	 * @param text 密文
+	 * @param key 密钥
+	 * @param iv 初始向量
+	 * @return
 	 */
-	public static void main(String[] args) {
-		String content = "1111111111111111";
-		String password = "1234567812345678";
-//		byte[] encryptBytes = AESUtils.encrypt(content, password);
-//		String encryptResultStr = parseByte2HexStr(encryptBytes);
-//		System.out.println("加密后：" + encryptResultStr);
-		byte[] encryptBytes;
-		String encryptResultStr = parseByte2HexStr(AESUtils.anotherEncrypt(content, password));
-		System.out.println("加密后：" + encryptResultStr);
-		encryptBytes = parseHexStr2Bytes(encryptResultStr);
-		encryptBytes = AESUtils.anotherDecrypt(encryptBytes, password);
-		System.out.println("解密后：" + new String(encryptBytes));
+	public static String doDecrypt(String text, String key, String iv) {
+		byte[] bytes = Base64Utils.decode(text);
+		IvParameterSpec ivSpec = new IvParameterSpec(iv.getBytes());
+		Key keyInst = new SecretKeySpec(key.getBytes(), ALG_DEF);
+		try {
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			cipher.init(Cipher.DECRYPT_MODE, keyInst, ivSpec);
+			byte[] retBytes = cipher.doFinal(bytes);
+			return new String(retBytes, Charset.forName("UTF-8"));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

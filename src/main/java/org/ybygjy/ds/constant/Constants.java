@@ -13,7 +13,7 @@ public class Constants {
 	/**
 	 * 身份认证服务地址
 	 */
-	public static final String SERV_URL_CHECKPERSONAL = "https://210.74.42.39/dataservice/apply-for-key.json";
+	public static final String SERV_URL_CHECKPERSONAL = "https://210.74.42.39/dataservice/check-personal-id.json";
 	/**
 	 * AES#Key
 	 */
@@ -22,4 +22,8 @@ public class Constants {
 	 * AES#初始化向量
 	 */
 	public static final String SERV_IV = "Xadiapdfaxi0s91D";
+	/**
+	 * AES#New_Key
+	 */
+	public static final String SERV_KEY_NEW = "SDGr4234gG465356";
 }
