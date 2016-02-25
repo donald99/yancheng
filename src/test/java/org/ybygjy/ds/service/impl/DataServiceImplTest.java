@@ -1,7 +1,5 @@
 package org.ybygjy.ds.service.impl;
 
-import static org.junit.Assert.fail;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +38,23 @@ public class DataServiceImplTest {
 
 	@Test
 	public void testCheckPersonId() {
-		fail("Not yet implemented");
+		Map<String, String> requestData = new HashMap<String, String>();
+		requestData.put("rhm_action", "0");
+		requestData.put("rhm_authid", "11111111");
+		requestData.put("rhm_channel", "0");
+		requestData.put("rhm_transcode", "CF00000001");
+		requestData.put("rhm_transid", "BT7D6drYfN0hqUkQWAO");
+		requestData.put("rhm_useraccid", "CF00000001");
+		requestData.put("rbm_identitynumber", "348888666688886666");
+		requestData.put("rbm_identitytype", "1");
+		requestData.put("rbm_personname", "CFCA");
+		requestData.put("rbm_address", "上海市东方路");
+		requestData.put("rbm_email", "abc@163.com");
+		requestData.put("rbm_cardnumber", "629999753596976789");
+		requestData.put("rbm_cellphonenumber", "13888886666");
+		DataService dataService = new DataServiceImpl();
+		Map<String, String> responseData = dataService.checkPersonId(requestData);
+		System.out.println(responseData);
 	}
 
 }

@@ -41,15 +41,16 @@ public class ApplyKeysServlet extends HttpServlet {
 			throws ServletException, IOException {
 		super.service(req, resp);
 		Map<String, String> requestData = new HashMap<String, String>();
-		requestData.put("rhm_action", "0");
-		requestData.put("rhm_authid", "11111111");
-		requestData.put("rhm_channel", "0");
+		
+		requestData.put("rhm_transid", "BT7D6drYfN0hq" + ((int)(Math.random() * 1000000)));
 		requestData.put("rhm_transcode", "CF00000001");
-		requestData.put("rhm_transid", "BT7D6drYfN0hqUkQWAO");
-		requestData.put("rhm_useraccid", "CF00000001");
+		requestData.put("rhm_action", "0");
+		requestData.put("rhm_channel", "0");
+		requestData.put("rhm_useraccid", req.getParameter("rhm_useraccid"));
+		requestData.put("rhm_authid", req.getParameter("rhm_authid"));
 		requestData.put("rbm_keytype", "0");
-		requestData.put("rbm_lastkey", "11111");
-		requestData.put("rbm_lastkeygentime", "11111111");
+		requestData.put("rbm_lastkey", req.getParameter("rbm_lastkey"));
+		requestData.put("rbm_lastkeygentime", req.getParameter("rbm_lastkeygentime"));
 		requestData.put("rbm_validationtime", "0");
 		DataService dataService = new DataServiceImpl();
 		Map<String, String> responseData = dataService.applyKeys(requestData);

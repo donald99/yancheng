@@ -2,8 +2,6 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
-import com.google.gson.GsonBuilder;
-
 /**
  * 报文头
  * @author WangYanCheng
@@ -67,8 +65,18 @@ public class RequestHeaderMessage implements HeaderMessage {
 		this.setUserAccountID(requestData.get("rhm_useraccid"));
 	}
 	public String toJson() {
-		String rtnJson = new GsonBuilder().create().toJson(this);
-		return rtnJson;
+//		String rtnJson = new GsonBuilder().create().toJson(this);
+//		return rtnJson;
+		StringBuffer sbuf = new StringBuffer();
+		sbuf.append("{")
+			.append("\"transactionID\":").append("\"").append(this.getTransactionID()).append("\",")
+			.append("\"transactionCode\":").append("\"").append(this.getTransactionCode()).append("\",")
+			.append("\"action\":").append("\"").append(this.getAction()).append("\",")
+			.append("\"chanel\":").append("\"").append(this.getChannel()).append("\",")
+			.append("\"userAccountID\":").append("\"").append(this.getUserAccountID()).append("\",")
+			.append("\"authorizationID\":").append("\"").append(this.getAuthorizationID()).append("\"")
+		.append("}");
+		return sbuf.toString();
 	}
 	public String toHmacData() {
 		return "\"head\":" + this.toJson();

@@ -1,4 +1,5 @@
 target/
+src/test/
 pom.xml
 pom.xml.tag
 pom.xml.releaseBackup

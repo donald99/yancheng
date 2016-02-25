@@ -44,7 +44,7 @@ public class HmacMessage implements Message {
 	 * {@inheritDoc}
 	 */
 	public String toJson() {
-		return "{\"hashValue\":\"" + this.getHmac() + "\"}";
+		return "\"hashValue\":\"" + this.getHmac() + "\"";
 	}
 
 	public String toHmacData() {

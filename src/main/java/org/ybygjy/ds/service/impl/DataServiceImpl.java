@@ -33,7 +33,7 @@ public class DataServiceImpl implements DataService {
 		HmacMessage hmacMessage = new HmacMessage(rehAppkeys, reqAppKeys);
 		//组织报文
 		StringBuffer sbuf = new StringBuffer();
-		sbuf.append("{").append(rehAppkeys.toJson()).append(",").append(reqAppKeys.toJson()).append(",").append(hmacMessage.toJson()).append("}");
+		sbuf.append("{\"head\":").append(rehAppkeys.toJson()).append(",\"body\":").append(reqAppKeys.toJson()).append(",").append(hmacMessage.toJson()).append("}");
 System.out.println("组织的报文数据：" + sbuf.toString());
 		return this.innerSend(Constants.SERV_URL_APPLYKEYS, sbuf.toString());
 	}
@@ -48,7 +48,7 @@ System.out.println("组织的报文数据：" + sbuf.toString());
 		reqCheckPersonal.parseMap(requestData);
 		HmacMessage hmacMessage = new HmacMessage(reqMes, reqCheckPersonal);
 		StringBuffer sbuf = new StringBuffer();
-		sbuf.append("{").append(reqMes.toJson()).append(",").append(reqCheckPersonal.toJson()).append(",").append(hmacMessage.toJson()).append("}");
+		sbuf.append("{\"head:\"").append(reqMes.toJson()).append(",\"body:\"").append(reqCheckPersonal.toJson()).append(",").append(hmacMessage.toJson()).append("}");
 System.out.println("组织的报文数据：" + sbuf.toString());
 		return this.innerSend(Constants.SERV_URL_CHECKPERSONAL, sbuf.toString());
 	}

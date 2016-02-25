@@ -21,6 +21,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
+import org.apache.http.util.EntityUtils;
 
 /**
  * 远程服务通信
@@ -62,20 +63,12 @@ System.out.println("传输数据:" + url + ":" + requestData);
 		postMethod.setEntity(new StringEntity(requestData, Charset.forName("UTF-8")));
 		try {
 			CloseableHttpResponse response = httpClient.execute(postMethod);
-			StringBuffer sbuf = new StringBuffer(response.toString());
-System.out.println("接收数据:" + response.getStatusLine());
-System.out.println("接收数据:" + response.getAllHeaders());
-System.out.println("接收数据:" + response.getEntity());
-//			if (response.getStatusLine().getStatusCode() == 200) {
-//				String encoding = response.getEntity().getContentEncoding().getValue();
-//				byte[] buff = new byte[1024];
-//				int flag = 0;
-//				BufferedInputStream bis = new BufferedInputStream(response.getEntity().getContent());
-//				while ((flag = bis.read(buff)) != -1) {
-//					sbuf.append(new String(buff, 0, flag, encoding));
-//				}
-//				bis.close();
-//			}
+			StringBuffer sbuf = new StringBuffer();
+System.out.println("接收数据statusLine:" + response.getStatusLine());
+			if (response.getStatusLine().getStatusCode() == 200) {
+				sbuf.append(EntityUtils.toString(response.getEntity(), "UTF-8"));
+			}
+System.out.println("接收数据Content:" + sbuf);
 			return sbuf.toString();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
