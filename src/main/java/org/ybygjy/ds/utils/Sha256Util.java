@@ -3,7 +3,6 @@ package org.ybygjy.ds.utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 /**
  * 摘要算法为SHA-256
@@ -30,15 +29,6 @@ public class Sha256Util {
             return null;
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        String str = "This is a test url:https://wangyin.com/wepay/web/pay";
-        try {
-            System.out.println(Arrays.toString(Sha256Util.encrypt(str.getBytes("UTF-8"))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

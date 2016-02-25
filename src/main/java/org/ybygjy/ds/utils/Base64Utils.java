@@ -1,7 +1,11 @@
 package org.ybygjy.ds.utils;
 
 import java.io.ByteArrayOutputStream;
-
+/**
+ * Base64工具类
+ * @author WangYanCheng
+ * @version 2016年2月25日
+ */
 public class Base64Utils
 {
 	private static char[] base64EncodeChars = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',

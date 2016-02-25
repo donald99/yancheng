@@ -89,7 +89,7 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 	}
 	@Override
 	public String toHmacData() {
-		logger.debug("加密用到的Key:{},{},{}", this.toJson(), this.getKeys(), Constants.SERV_IV);
+		logger.debug("加密用到的信息:{},{},{}", this.toJson(), this.getKeys(), Constants.SERV_IV);
 		byte[] bytes = AESUtils.doEncrypt(this.toJson(), this.getKeys(), Constants.SERV_IV);
 		return null == bytes ? null : Base64Utils.encode(bytes);
 	}

@@ -2,6 +2,7 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
 import org.ybygjy.ds.utils.Sha256Util;
 
 /**
@@ -12,6 +13,7 @@ import org.ybygjy.ds.utils.Sha256Util;
 public class HmacMessage implements Message {
 	private HeaderMessage headerMessage;
 	private BodyMessage bodyMessage;
+	private Logger logger = org.slf4j.LoggerFactory.getLogger(HmacMessage.class);
 	/**
 	 * construction
 	 * @param headerMessage
@@ -28,14 +30,14 @@ public class HmacMessage implements Message {
 	 * @return rtnHmac
 	 */
 	public String getHmac() {
-System.out.println("body加密输入数据：" + bodyMessage.toJson());
+logger.debug("body加密输入数据：{}", bodyMessage.toJson());
 		String bodyHmac = bodyMessage.toHmacData();
-System.out.println("body加密输出数据：" + bodyHmac);
+logger.debug("body加密输出数据：{}", bodyHmac);
 		String headerHmac = headerMessage.toHmacData();
 		String hmacSrcData = headerHmac + ",\"body\":\"" + bodyHmac + "\""; 
-System.out.println("签名输入数据：" + hmacSrcData);
+logger.debug("签名输入数据：{}", hmacSrcData);
 		String rtnHmac = Sha256Util.encrypt(hmacSrcData);
-System.out.println("签名输出数据：" + rtnHmac);
+logger.debug("签名输出数据：{}", rtnHmac);
 		return rtnHmac;
 	}
 

@@ -22,6 +22,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 远程服务通信
@@ -29,6 +31,7 @@ import org.apache.http.util.EntityUtils;
  * @version 2016年2月24日
  */
 public class HttpClientUtils {
+	private static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);
 	/**
 	 * 创建自定义通信对象
 	 * @return rtnHttpClient {@link CloseableHttpClient}
@@ -59,16 +62,16 @@ public class HttpClientUtils {
 	public static String doRequest(String url, String requestData) {
 		CloseableHttpClient httpClient = HttpClientUtils.createSSLClientDefault();
 		HttpPost postMethod = new HttpPost(url);
-System.out.println("传输数据:" + url + ":" + requestData);
+		logger.debug("传输数据:{}:{}", url, requestData);
 		postMethod.setEntity(new StringEntity(requestData, Charset.forName("UTF-8")));
 		try {
 			CloseableHttpResponse response = httpClient.execute(postMethod);
 			StringBuffer sbuf = new StringBuffer();
-System.out.println("接收数据statusLine:" + response.getStatusLine());
+			logger.debug("接收数据statusLine:{}", response.getStatusLine());
 			if (response.getStatusLine().getStatusCode() == 200) {
 				sbuf.append(EntityUtils.toString(response.getEntity(), "UTF-8"));
 			}
-System.out.println("接收数据Content:" + sbuf);
+			logger.debug("接收数据Content:{}", sbuf);
 			return sbuf.toString();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
