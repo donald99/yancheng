@@ -25,11 +25,11 @@ public class DataServiceImplTest {
 		requestData.put("rhm_authid", "11111111");
 		requestData.put("rhm_channel", "0");
 		requestData.put("rhm_transcode", "CF00000001");
-		requestData.put("rhm_transid", "BT7D6drYfN0hqUkQWAO");
-		requestData.put("rhm_useraccid", "CF00000001");
+		requestData.put("rhm_transid", "BT7D6drYfN0hqU" + ((int)(Math.random() * 100000)));
+		requestData.put("rhm_useraccid", "LZKJ000001");
 		requestData.put("rbm_keytype", "0");
-		requestData.put("rbm_lastkey", "11111");
-		requestData.put("rbm_lastkeygentime", "11111111");
+		requestData.put("rbm_lastkey", "SDGr4234gG465356");
+		requestData.put("rbm_lastkeygentime", "20160225113905");
 		requestData.put("rbm_validationtime", "0");
 		DataService dataService = new DataServiceImpl();
 		Map<String, String> responseData = dataService.applyKeys(requestData);

@@ -2,6 +2,10 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
+import org.ybygjy.ds.constant.Constants;
+import org.ybygjy.ds.utils.AESUtils;
+import org.ybygjy.ds.utils.Base64Utils;
+
 import com.google.gson.GsonBuilder;
 
 /**
@@ -73,7 +77,8 @@ public class RequestBodyMessage4CheckPersonal extends RequestBodyMessage {
 	}
 	@Override
 	public String toHmacData() {
-		return this.toJson();
+		byte[] bytes = AESUtils.doEncrypt(this.toJson(), Constants.SERV_KEY, Constants.SERV_IV);
+		return Base64Utils.encode(bytes);
 	}
 	@Override
 	public String toJson() {

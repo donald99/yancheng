@@ -2,9 +2,6 @@ package org.ybygjy.ds.pojo;
 
 import java.util.Map;
 
-import org.ybygjy.ds.constant.Constants;
-import org.ybygjy.ds.utils.AESUtils;
-import org.ybygjy.ds.utils.Base64Utils;
 import org.ybygjy.ds.utils.Sha256Util;
 
 /**
@@ -31,12 +28,13 @@ public class HmacMessage implements Message {
 	 * @return rtnHmac
 	 */
 	public String getHmac() {
+System.out.println("body签名原始数据：" + bodyMessage.toJson());
 		String bodyHmac = bodyMessage.toHmacData();
-		byte[] bytes = AESUtils.doEncrypt(bodyHmac, Constants.SERV_KEY, Constants.SERV_IV);
-		String base64Str = Base64Utils.encode(bytes);
 		String headerHmac = headerMessage.toHmacData();
-		String hmacSrcData = headerHmac + ",\"body\":\"" + base64Str + "\""; 
+		String hmacSrcData = headerHmac + ",\"body\":\"" + bodyHmac + "\""; 
+System.out.println("计算签名数据：" + hmacSrcData);
 		String rtnHmac = Sha256Util.encrypt(hmacSrcData);
+System.out.println("计算签名数据=>SHA256：" + rtnHmac);
 		return rtnHmac;
 	}
 

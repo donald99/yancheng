@@ -48,7 +48,7 @@ System.out.println("组织的报文数据：" + sbuf.toString());
 		reqCheckPersonal.parseMap(requestData);
 		HmacMessage hmacMessage = new HmacMessage(reqMes, reqCheckPersonal);
 		StringBuffer sbuf = new StringBuffer();
-		sbuf.append("{\"head:\"").append(reqMes.toJson()).append(",\"body:\"").append(reqCheckPersonal.toJson()).append(",").append(hmacMessage.toJson()).append("}");
+		sbuf.append("{\"head:\"").append(reqMes.toJson()).append(",\"body:\"").append(reqCheckPersonal.toHmacData()).append("\",").append(hmacMessage.toJson()).append("}");
 System.out.println("组织的报文数据：" + sbuf.toString());
 		return this.innerSend(Constants.SERV_URL_CHECKPERSONAL, sbuf.toString());
 	}
@@ -59,7 +59,7 @@ System.out.println("组织的报文数据：" + sbuf.toString());
 System.out.println("响应内容:" + responsePlainText);
 		if (null == responsePlainText) {
 			reqData.put("error_code", "20001");
-			reqData.put("error_message", "申请Key失败!");
+			reqData.put("error_message", "验证失败!");
 		} else {
 			reqData.put("error_code", "0000");
 			reqData.put("error_message", "");
